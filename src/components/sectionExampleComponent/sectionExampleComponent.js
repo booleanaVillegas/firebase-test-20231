@@ -18,7 +18,6 @@ class SectionExampleComponent extends HTMLElement {
 
     // this is called when any of the observedAttributes changes
     attributeChangedCallback(propName, oldValue, newValue) {
-        // console.log('attr ' + propName + ' changed')
         this[propName] = newValue;
         this.render();
     }
