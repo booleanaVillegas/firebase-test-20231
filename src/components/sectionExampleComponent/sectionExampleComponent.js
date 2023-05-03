@@ -1,32 +1,32 @@
 class SectionExampleComponent extends HTMLElement {
 
-  constructor() {
-    super();
-    // this.attachShadow({ mode: 'open' });
-  }
+    constructor() {
+        super();
+        // this.attachShadow({ mode: 'open' });
+    }
 
-  // This methos is called once the component is created
-  connectedCallback() {
-    this.render();
-  }
+    // This methos is called once the component is created in DOM
+    connectedCallback() {
+        this.render();
+    }
 
-  // this is how you declare which props are you interested in
-  // Nota: no usar 'title' como atributo pues genera problemas al ser una palabra reservada
-  static get observedAttributes() {
-    return ['name', 'description', 'background'];
-  }
+    // this is how you declare which props are you interested in
+    // Nota: no usar 'title' como atributo pues genera problemas al ser una palabra reservada
+    static get observedAttributes() {
+        return ['name', 'description', 'background'];
+    }
 
-  // this is called when any of the observedAttributes changes
-  attributeChangedCallback(propName, oldValue, newValue) {
-    // console.log('attr ' + propName + ' changed')
-    this[propName] = newValue;
-    this.render();
-  }
+    // this is called when any of the observedAttributes changes
+    attributeChangedCallback(propName, oldValue, newValue) {
+        // console.log('attr ' + propName + ' changed')
+        this[propName] = newValue;
+        this.render();
+    }
 
-  // this is our main html for the component, and is reRendered when attr changes
-  render() {
-    console.log(this)
-    this.innerHTML = `
+    // this is our main html for the component, and is reRendered when attr changes
+    render() {
+        console.log(this)
+        this.innerHTML = `
           <section style="background-color: ${this.background}">
             <h1>${this.name}</h1>
             <h2>The hardcoded subtitle</h2>
@@ -34,7 +34,7 @@ class SectionExampleComponent extends HTMLElement {
             <slot></slot>
           </section>
           `;
-  }
+    }
 }
 
 customElements.define('section-example-component', SectionExampleComponent);
