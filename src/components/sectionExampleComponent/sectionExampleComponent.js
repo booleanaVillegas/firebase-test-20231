@@ -26,7 +26,6 @@ class SectionExampleComponent extends HTMLElement {
 
     // this is our main html for the component, and is reRendered when attr changes
     render() {
-        console.log(this)
         this.innerHTML = `
           <section class="section-comp" style="background-color: ${this.background}">
             <h1>${this.name}</h1>
