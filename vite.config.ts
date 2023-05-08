@@ -14,6 +14,7 @@ export default defineConfig({
       input: {
         main: resolve(root, 'index.html'),
         about: resolve(root, 'about', 'index.html'),
+        "product-detail": resolve(root, 'product-detail', 'index.html'),
       }
     }
   }

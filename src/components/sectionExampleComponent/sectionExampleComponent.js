@@ -1,4 +1,4 @@
-import './style.css'
+import './style.scss'
 
 class SectionExampleComponent extends HTMLElement {
 
@@ -28,9 +28,9 @@ class SectionExampleComponent extends HTMLElement {
     render() {
         console.log(this)
         this.innerHTML = `
-          <section style="background-color: ${this.background}">
+          <section class="section-comp" style="background-color: ${this.background}">
             <h1>${this.name}</h1>
-            <h2>The hardcoded subtitle</h2>
+            <h2 class="section-comp__subtitle">The hardcoded subtitle</h2>
             <p>${this.description}</p>
             <slot></slot>
           </section>
