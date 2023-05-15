@@ -14,7 +14,7 @@ async function retrieveProducts() {
 
 function renderProducts() {
     const container = document.querySelector('#products-container')
-    
+
     products.forEach((product) => {
         const elem = document.createElement('div')
         elem.className = 'product'
