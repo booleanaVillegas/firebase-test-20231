@@ -34,9 +34,9 @@ onAuthStateChanged(auth, (user) => {
     console.log('hubo un cambio en auth')
     if (user) {
         // const uid = user.uid;
-        userValidation(true)
+       // userValidation(true, user.email)
     } else {
-        userValidation(false)
+       // userValidation(false)
     }
 });
 
@@ -64,7 +64,7 @@ export async function addProduct(product) {
 
 export async function addProductWithId(product, id, file) {
     try {
-        const imageUrl = await uploadFile(file.name, file);
+        const imageUrl = await uploadFile(file.name, file, 'products');
 
         await setDoc(doc(db, "products", id), {...product, url: imageUrl });
     } catch (e) {
@@ -72,8 +72,8 @@ export async function addProductWithId(product, id, file) {
     }
 }
 
-export async function uploadFile(name, file) {
-    const taskImgRef = ref(storage, `products/${name}`);
+export async function uploadFile(name, file, folder) {
+    const taskImgRef = ref(storage, `${folder}/${name}`);
 
     try {
         await uploadBytes(taskImgRef, file);
@@ -84,7 +84,7 @@ export async function uploadFile(name, file) {
     }
 }
 
-export async function createUser(email, password) {
+export async function createUser(email, password, username, file) {
     try {
         const userCredential = await createUserWithEmailAndPassword(
             auth,
@@ -94,7 +94,14 @@ export async function createUser(email, password) {
 
         // Signed in
         const user = userCredential.user;
-        console.log("usuario creado con ->", user);
+        // console.log("usuario creado con ->", user.uid);
+
+        /// subir imagen
+        const imageUrl = await uploadFile(file.name, file, 'users');
+
+        /// crear registro en BD
+        await addUserToDB({username, imageUrl, email},user.uid)
+
         return { status: true, info: user.uid };
     } catch (error) {
         const errorCode = error.code;
@@ -122,4 +129,18 @@ export async function logOut() {
     } catch (error) {
         console.error(error)
     };
+}
+
+export async function addUserToDB(userData, uid) {
+    console.log('userData ---->', userData)
+    console.log('uid ---->', uid)
+    try {
+        const docRef = await setDoc(doc(db, "users", uid), userData);
+
+        console.log(docRef)
+
+        console.log("User written with ID: ", uid);
+    } catch (e) {
+        console.error("Error adding user: ", e);
+    }
 }
